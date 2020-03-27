@@ -6,6 +6,9 @@ pub enum Frequency {
     Monthly,
     Quarterly,
     Yearly,
+    /// We get an empty variant for free plans
+    #[serde(other)]
+    Missing,
 }
 
 #[derive(Deserialize, Debug)]
