@@ -11,6 +11,9 @@ categories = ["api-bindings", "web-programming::http-client"]
 license = "BSD-3-Clause"
 repository = "https://github.com/shalzz/cloudflare-rs"
 
+[lib]
+name = "cloudflare"
+
 [dependencies]
 anyhow = "1.0"
 async-trait = "0.1"
