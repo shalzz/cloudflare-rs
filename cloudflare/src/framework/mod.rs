@@ -13,6 +13,9 @@ pub mod mock;
 mod reqwest_adaptors;
 pub mod response;
 
+use crate::framework::{apiclient::ApiClient, auth::AuthClient, response::map_api_response};
+use anyhow::Result;
+use reqwest_adaptors::match_reqwest_method;
 use serde::Serialize;
 use std::time::Duration;
 

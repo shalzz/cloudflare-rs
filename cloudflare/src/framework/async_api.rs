@@ -65,6 +65,7 @@ impl Client {
             http_client,
         })
     }
+}
 
     pub async fn request_handle<ResultType, QueryType, BodyType>(
         &self,

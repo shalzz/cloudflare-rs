@@ -15,7 +15,7 @@ repository = "https://github.com/shalzz/cloudflare-rs"
 name = "cloudflare"
 
 [dependencies]
-anyhow = "1.0"
+anyhow = "1.0.26"
 async-trait = "0.1"
 base64 = "0.13"
 chrono = { version = "0.4", features = ["serde"] }
