@@ -5,7 +5,8 @@ use crate::framework::{
     reqwest_adaptors::match_reqwest_method,
     response::{ApiErrors, ApiFailure, ApiSuccess},
     response::{ApiResponse, ApiResult},
-    Environment, HttpApiClientConfig,
+    apiclient::HttpApiClientConfig,
+    Environment,
 };
 use async_trait::async_trait;
 use reqwest;

@@ -7,10 +7,11 @@ use clap::{App, AppSettings, Arg, ArgMatches, SubCommand};
 use cloudflare::endpoints::{account, dns, workers, zone};
 use cloudflare::framework::{
     apiclient::ApiClient,
+    apiclient::{HttpApiClient, HttpApiClientConfig},
     auth::Credentials,
     mock::{MockApiClient, NoopEndpoint},
     response::{ApiFailure, ApiResponse, ApiResult},
-    Environment, HttpApiClient, HttpApiClientConfig, OrderDirection,
+    Environment, OrderDirection,
 };
 use serde::Serialize;
 
