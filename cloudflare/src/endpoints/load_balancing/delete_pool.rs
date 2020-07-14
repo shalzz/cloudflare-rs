@@ -1,5 +1,5 @@
 use crate::framework::endpoint::{Endpoint, Method};
-use crate::framework::response::ApiResult;
+use crate::framework::ApiResult;
 
 /// Delete Pool
 /// https://api.cloudflare.com/#account-load-balancer-pools-delete-pool

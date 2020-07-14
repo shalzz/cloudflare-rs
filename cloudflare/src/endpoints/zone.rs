@@ -1,7 +1,7 @@
 use crate::endpoints::{account::AccountDetails, plan::Plan};
 use crate::framework::{
     endpoint::{Endpoint, Method},
-    response::ApiResult,
+    ApiResult,
 };
 use crate::framework::{OrderDirection, SearchMatch};
 use chrono::offset::Utc;

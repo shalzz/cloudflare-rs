@@ -1,10 +1,9 @@
 use crate::framework::apiclient::ApiClient;
 use crate::framework::async_api;
 use crate::framework::endpoint::{Endpoint, Method};
-use crate::framework::response::{ApiError, ApiErrors, ApiFailure, ApiResponse, ApiResult};
+use crate::framework::ApiResult;
+use anyhow::Result;
 use async_trait::async_trait;
-use reqwest;
-use std::collections::HashMap;
 
 pub struct MockApiClient {}
 
@@ -24,25 +23,18 @@ impl Endpoint<NoopResult> for NoopEndpoint {
 pub struct NoopResult {}
 impl ApiResult for NoopResult {}
 
-fn mock_response() -> ApiFailure {
-    ApiFailure::Error(
-        reqwest::StatusCode::INTERNAL_SERVER_ERROR,
-        ApiErrors {
-            errors: vec![ApiError {
-                code: 9999,
-                message: "This is a mocked failure response".to_owned(),
-                other: HashMap::new(),
-            }],
-            other: HashMap::new(),
-        },
-    )
+fn mock_response() -> anyhow::Error {
+    surf::Error {
+        error: anyhow::Error::msg("This is a mocked failure response".to_owned()),
+        status: surf::http_types::StatusCode::InternalServerError,
+    }
 }
 
 impl ApiClient for MockApiClient {
     fn request<ResultType, QueryType, BodyType>(
         &self,
         _endpoint: &dyn Endpoint<ResultType, QueryType, BodyType>,
-    ) -> ApiResponse<ResultType> {
+    ) -> ResultType {
         Err(mock_response())
     }
 }
@@ -52,7 +44,7 @@ impl async_api::ApiClient for MockApiClient {
     async fn request<ResultType, QueryType, BodyType>(
         &self,
         _endpoint: &(dyn Endpoint<ResultType, QueryType, BodyType> + Send + Sync),
-    ) -> ApiResponse<ResultType> {
+    ) -> Result<ResultType> {
         Err(mock_response())
     }
 }

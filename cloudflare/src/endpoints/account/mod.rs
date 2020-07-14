@@ -1,4 +1,4 @@
-use crate::framework::response::ApiResult;
+use crate::framework::ApiResult;
 use chrono::{DateTime, Utc};
 use serde::Deserialize;
 

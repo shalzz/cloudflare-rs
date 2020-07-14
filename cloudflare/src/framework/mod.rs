@@ -11,13 +11,17 @@ pub mod json_utils;
 #[cfg(not(target_arch = "wasm32"))]  // The mock contains a blocking implementation.
 pub mod mock;
 mod reqwest_adaptors;
-pub mod response;
 
 use crate::framework::{apiclient::ApiClient, auth::AuthClient, response::map_api_response};
 use anyhow::Result;
 use reqwest_adaptors::match_reqwest_method;
 use serde::Serialize;
 use std::time::Duration;
+
+pub trait ApiResult: serde::de::DeserializeOwned + std::fmt::Debug {}
+
+/// Some endpoints return nothing. That's OK.
+impl ApiResult for () {}
 
 #[derive(Serialize, Clone, Debug)]
 pub enum OrderDirection {

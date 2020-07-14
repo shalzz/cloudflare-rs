@@ -1,6 +1,6 @@
 use crate::framework::{
     endpoint::{Endpoint, Method},
-    response::ApiResult,
+    ApiResult,
 };
 /// https://api.cloudflare.com/#dns-records-for-a-zone-properties
 use crate::framework::{OrderDirection, SearchMatch};

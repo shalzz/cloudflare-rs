@@ -3,7 +3,7 @@ use crate::framework::{
     auth::{AuthClient, Credentials},
     endpoint::Endpoint,
     environment::Environment,
-    reqwest_adaptors, response,
+    reqwest_adaptors, ApiResult,
 };
 
 use anyhow::Result;
@@ -16,9 +16,9 @@ pub trait ApiClient {
     fn request<ResultType, QueryType, BodyType>(
         &self,
         endpoint: &dyn Endpoint<ResultType, QueryType, BodyType>,
-    ) -> response::ApiResponse<ResultType>
+    ) -> Result<ResultType>
     where
-        ResultType: response::ApiResult,
+        ResultType: ApiResult,
         QueryType: Serialize,
         BodyType: Serialize;
 }
@@ -73,9 +73,9 @@ impl<'a> ApiClient for HttpApiClient {
     fn request<ResultType, QueryType, BodyType>(
         &self,
         endpoint: &dyn Endpoint<ResultType, QueryType, BodyType>,
-    ) -> response::ApiResponse<ResultType>
+    ) -> Result<ResultType>
     where
-        ResultType: response::ApiResult,
+        ResultType: ApiResult,
         QueryType: Serialize,
         BodyType: Serialize,
     {
@@ -96,7 +96,5 @@ impl<'a> ApiClient for HttpApiClient {
         request = request.auth(&self.credentials);
 
         let response = request.send()?;
-
-        response::map_api_response(response)
     }
 }

@@ -1,4 +1,4 @@
-use crate::framework::response::ApiResult;
+use crate::framework::ApiResult;
 use crate::framework::Environment;
 use serde::Serialize;
 use url::Url;

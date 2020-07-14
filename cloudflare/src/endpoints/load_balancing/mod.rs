@@ -2,7 +2,7 @@ pub mod create_pool;
 pub mod delete_pool;
 pub mod pool_details;
 
-use crate::framework::response::ApiResult;
+use crate::framework::ApiResult;
 use chrono::offset::Utc;
 use chrono::DateTime;
 use std::collections::HashSet;
