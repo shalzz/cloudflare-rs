@@ -1,13 +1,12 @@
 use crate::framework::{
-    apiclient::HttpApiClientConfig,
     auth,
     auth::{AuthClient, Credentials},
     endpoint::{Endpoint, Method},
     ApiResult, Environment,
 };
-use anyhow::Result;
 use async_trait::async_trait;
 use serde::Serialize;
+use surf::Result;
 
 #[async_trait]
 pub trait ApiClient {
@@ -37,11 +36,7 @@ impl AuthClient for reqwest::RequestBuilder {
 }
 
 impl Client {
-    pub fn new(
-        credentials: auth::Credentials,
-        config: HttpApiClientConfig,
-        environment: Environment,
-    ) -> Result<Client> {
+    pub fn new(credentials: auth::Credentials, environment: Environment) -> Result<Client> {
         Ok(Client {
             environment,
             credentials,
@@ -66,12 +61,12 @@ impl ApiClient for Client {
         );
         //                .query(&endpoint.query())
 
+        request = request.auth(&self.credentials);
+
         if let Some(body) = endpoint.body() {
             request = request.body_json(&body)?;
-            request = request.set_header(reqwest::header::CONTENT_TYPE, endpoint.content_type());
         }
 
-        request = request.auth(&self.credentials);
         request.recv_json().await?
     }
 }

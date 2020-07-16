@@ -1,9 +1,8 @@
-use crate::framework::apiclient::ApiClient;
 use crate::framework::async_api;
 use crate::framework::endpoint::{Endpoint, Method};
 use crate::framework::ApiResult;
-use anyhow::Result;
 use async_trait::async_trait;
+use surf::http_types::Result;
 
 pub struct MockApiClient {}
 
@@ -23,19 +22,10 @@ impl Endpoint<NoopResult> for NoopEndpoint {
 pub struct NoopResult {}
 impl ApiResult for NoopResult {}
 
-fn mock_response() -> anyhow::Error {
+fn mock_response() -> surf::Error {
     surf::Error {
         error: anyhow::Error::msg("This is a mocked failure response".to_owned()),
         status: surf::http_types::StatusCode::InternalServerError,
-    }
-}
-
-impl ApiClient for MockApiClient {
-    fn request<ResultType, QueryType, BodyType>(
-        &self,
-        _endpoint: &dyn Endpoint<ResultType, QueryType, BodyType>,
-    ) -> ResultType {
-        Err(mock_response())
     }
 }
 
